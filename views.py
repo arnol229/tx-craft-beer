@@ -1,21 +1,39 @@
-from django.shortcuts import render
+from django.shortcuts import render, render_to_response
+from django.template.context import RequestContext
+
 from django import forms
 from .models import Brewery, BrewPub, Beer, Bar, Announcments
 
 def home(request):
+	
+	content = Announcments.objects.filter(-'pub_date')
+	return render(request, 'base.html', content)
 
 def contact(request):
 
-def index(request, subject):
-	#list all of a type (brewery, brewpub, etc)
-	#can subject be a search?
-	if not subject:
-		#return render(no subject!)
+def index(request):
+	#ajax searching
+	if request.is_ajax():
+		try:
+			#search term
+			q = request.GET.get('q')
+			#category to search
+			s = request.GET.get('s')
+		except KeyError:
+			data = {'results': "error!"}
+			return render_to_response('index', data, context_instance=RequestContext(request))
 
-	elif subject != 'Brewery' or 'Brewpub' or 'Bar' or 'Beer' or 'Announcments':
-		#return render(its not valid!)
-		#or assume it is a search term?
+		if (q is not None) and (s is not None):
+			results = s.objects.filter(title__icontains=q)# can an object be referenced like this?
+			data = {'results':results}
+			return render_to_response('index.html', data, context_instance=RequestContext(request))
+
+	elif not request.GET.get('s', None):
+		#return render("no subject!.. How'd you get here?")
+
 	else:
+		subject = request.GET.get('s', None)
+
 		cases = {
 		'Brewery':Brewery.objects.all(),
 		'Brewpub':BrewPub.objects.all(),
@@ -23,7 +41,11 @@ def index(request, subject):
 		'Beer':Beer.objects.all(),
 		'Announcments':Announcments.objects.all(),
 		}
-		results = cases[subject]
+
+		try:
+			results = cases[subject]
+		except KeyError:
+			results = cases
 
 		context = {'results':results}
 

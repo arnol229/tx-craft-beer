@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<title>
+Texas Craft Beer
+</title>
+<head>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function(){
+			//menu dropdown
+			$(".menu").on('hover', function(e){
+				if (e.type == "mouseenter"){
+					$(this).children().css("display", true)
+				}
+				else{
+					$(this).children().css("display", none)
+				}
+			});
+
+		})
+	</script>
+	<style>
+	.menu{
+		display: inline-block;
+		border-width: 10px;
+		border-color: black;
+		height: 50px;
+		width: 100px;
+		border-radius: 5px;
+		border: solid;
+	}
+	ul.submenu{
+
+	}
+	</style>
+	<div id="logo">
+	<a href="#">Texas Craft Beers</a>
+	</div>
+	<ul class="main">
+
+		<li class="menu" id="Breweries">
+			<b>Breweries</b>
+			<ul class="submenu">
+				Region
+				<li>
+					Austin
+				</li>
+				<li>
+					San Antonio
+				</li>
+			</ul>
+		</li>
+
+		<li class="menu" id="BrewPubs">
+			BrewPubs
+		</li>
+
+		<li class="menu" id="Bars">
+			Bars
+		</li>
+
+		<li class="menu" id="Beers">
+			Beers
+		</li>
+	</ul>
+</head>
+
+<body>
+{% block body %}
+<!-- Home page announcements -->
+<!-- currently 4 spots of equal size-->
+	<div class="anncouncement" id="spot0">
+		<a href="{{ content.0.url }}">
+			{{ content.0.frontPic }}
+		</a>
+	</div>
+
+	<div class="anncouncement" id="spot1">
+		<a href="{{ content.1.url }}">
+			{{ content.1.frontPic }}
+		</a>
+	</div>
+	
+	<div class="anncouncement" id="spot2">
+		<a href="{{ content.2.url }}">
+			{{ content.2.frontPic }}
+		</a>
+	</div>
+
+	<div class="anncouncement" id="spot3">
+		<a href="{{ content.3.url }}">
+			{{ content.3.frontPic }}
+		</a>
+	</div>
+
+{%  endblock %}
+</body>
+<footer>
+	Site made by idiots </br>
+	arnol229@gmail.com
+</footer>
+</html>

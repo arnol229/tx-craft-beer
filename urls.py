@@ -7,8 +7,10 @@ admin.autodiscover()
 
 urlpatterns = patterns('',
 	(r'^$', 'home', name='home'),
-	(r'^view/(?P<subject>[/w]+)/$', 'index', name='index'),
 	(r'^contact/$', 'contact', name='contact'),
+	#index
+	(r'^/(?P<subject>[/w]+)/$', 'index', name='index'),
+	#specifics
 	(r'^brewery/(?P<id>[/d]+)/$', 'brewery', name='brewery'),
 	(r'^brewpub/(?P<id>[/d]+)/$', 'brewpub', name='brewpub'),
 	(r'^bar/(?P<id>[/d]+)/$', 'bar', name='bar'),
