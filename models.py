@@ -27,6 +27,11 @@ class BrewPubBeer(models.Model):
 		def __unicode__(self):
 			return name
 
+class Bar(models.Model):
+	name = models.CharField(max_length=20)
+	bio=models.CharField(max_length=500)
+	pic=models.imageField()
+
 class Announcments(models.Model):
 	title=models.CharField(max_length=15)
 	content=models.CharField(max_length=50)

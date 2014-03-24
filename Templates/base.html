@@ -18,6 +18,21 @@ Texas Craft Beer
 				}
 			});
 
+			//ajax search
+			$(".search#searchtext").on('keyup', function(e){
+				$.ajax({
+					type:"POST",
+					url: "index",
+					data: $(this).serialize(),
+					dataType: "json",
+					success: function( data ){
+						//eventually work in animation
+						//for swapping main body with new results
+						$("<body>").html(data.html)
+					},
+				});
+			});
+
 		})
 	</script>
 	<style>
@@ -65,6 +80,14 @@ Texas Craft Beer
 		</li>
 	</ul>
 </head>
+
+<div class = "search">
+	{% block search %}
+	<form>
+	Search:<input id="searchtext" type="text" s="all" name="q" onkeyup=>
+	</form>
+	{% endblock %}
+</div>
 
 <body>
 {% block body %}

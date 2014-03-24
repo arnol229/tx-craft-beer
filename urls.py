@@ -9,7 +9,7 @@ urlpatterns = patterns('',
 	(r'^$', 'home', name='home'),
 	(r'^contact/$', 'contact', name='contact'),
 	#index
-	(r'^/(?P<subject>[/w]+)/$', 'index', name='index'),
+	(r'^index/$', 'index', name='index'),
 	#specifics
 	(r'^brewery/(?P<id>[/d]+)/$', 'brewery', name='brewery'),
 	(r'^brewpub/(?P<id>[/d]+)/$', 'brewpub', name='brewpub'),
