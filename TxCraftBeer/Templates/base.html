@@ -21,8 +21,8 @@ Texas Craft Beer
 			//ajax search
 			$(".search#searchtext").on('keyup', function(e){
 				$.ajax({
-					type:"POST",
-					url: "index",
+					type:"GET",
+					url: "search",
 					data: $(this).serialize(),
 					dataType: "json",
 					success: function( data ){
@@ -84,7 +84,9 @@ Texas Craft Beer
 <div class = "search">
 	{% block search %}
 	<form>
-	Search:<input id="searchtext" type="text" s="all" name="q" onkeyup=>
+	Search:<input id="searchtext" type="text" s="all" name="q">
+	<input type="hidden" name="s" value="all" />
+	<input type="submit" value="Submit" />
 	</form>
 	{% endblock %}
 </div>
