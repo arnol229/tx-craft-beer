@@ -1,10 +1,11 @@
 from django.contrib import admin
-from models import Beer, Brewery, Bar, BrewPub
+from TxCraftBeer.models import Beer, Brewery, Bar, BrewPub, Announcments
 
-class BeerAdmin(admin.ModelAdmin):
-	list_display=('name','address','bio')
+#class BeerAdmin(admin.ModelAdmin):
+#	list_display=('name','address','bio')
 
-admin.site.register(Beer, BeerAdmin)
+admin.site.register(Beer)
 admin.site.register(Brewery)
 admin.site.register(Bar)
 admin.site.register(BrewPub)
+admin.site.register(Announcments)

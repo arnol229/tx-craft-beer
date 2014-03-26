@@ -19,7 +19,7 @@ Texas Craft Beer
 			});
 
 			//ajax search
-			$(".search#searchtext").on('keyup', function(e){
+			$("input#searchtext").on('keyup', function(e){
 				$.ajax({
 					type:"GET",
 					url: "search",
@@ -83,8 +83,8 @@ Texas Craft Beer
 
 <div class = "search">
 	{% block search %}
-	<form>
-	Search:<input id="searchtext" type="text" s="all" name="q">
+	<form action="/index/">
+	Search:<input id="searchtext" type="text" name="q">
 	<input type="hidden" name="s" value="all" />
 	<input type="submit" value="Submit" />
 	</form>
@@ -93,29 +93,38 @@ Texas Craft Beer
 
 <body>
 {% block body %}
+
+{% if errors %}
+{{ errors }}<!-- oof, this doesnt look right!-->
+{% endif %}
+
 <!-- Home page announcements -->
 <!-- currently 4 spots of equal size-->
 	<div class="anncouncement" id="spot0">
-		<a href="{{ content.0.url }}">
-			{{ content.0.frontPic }}
+		SPOT0
+		<a href="http://{{ content.0.url }}">
+			<img src="{{ STATIC_URL }}{{ content.0.pic }}" height="100" />
 		</a>
 	</div>
 
 	<div class="anncouncement" id="spot1">
+		SPOT1
 		<a href="{{ content.1.url }}">
-			{{ content.1.frontPic }}
+			<img src="{{ STATIC_URL }}{{ content.1.pic.url }}" height="100" width = "100" />
 		</a>
 	</div>
 	
 	<div class="anncouncement" id="spot2">
+		SPOT2
 		<a href="{{ content.2.url }}">
-			{{ content.2.frontPic }}
+			<img src='{{ STATIC_URL }}{{ content.2.pic }}' height="100" width = "100" />
 		</a>
 	</div>
 
 	<div class="anncouncement" id="spot3">
+		SPOT3
 		<a href="{{ content.3.url }}">
-			{{ content.3.frontPic }}
+			<img src="{{ STATIC_URL }}{{ content.3.pic }}" height="100" width = "100"/>
 		</a>
 	</div>
 

@@ -1,0 +1,9 @@
+{% extends "base.html" %}
+{% block body %}
+Search results for {{ query }} within the subject: {{ subject }}
+<br>
+{% for result in results %}
+{{ result }}
+<br>
+{% endfor %}
+{% endblock %}
