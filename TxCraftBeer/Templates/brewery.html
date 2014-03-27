@@ -1,10 +1,8 @@
 {% extends "base.html" %}
+
 {% block search %}
-<form>
-	Search:<input id="searchtext" type="text" name="q" placeholder="Breweries...">
-	<input type="hidden" name="s" value="all" />
-	<input type="submit" value="Submit" />
-</form>
+<input type="hidden" name="s" value="brewery" />
 {% endblock %}
+
 {% block content %}
 {% endblock %}

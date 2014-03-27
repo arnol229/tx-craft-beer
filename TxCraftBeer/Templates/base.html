@@ -82,13 +82,12 @@ Texas Craft Beer
 </head>
 
 <div class = "search">
-	{% block search %}
 	<form action="/index/">
 	Search:<input id="searchtext" type="text" name="q">
-	<input type="hidden" name="s" value="all" />
+	{% block search %}
+	{% endblock %}
 	<input type="submit" value="Submit" />
 	</form>
-	{% endblock %}
 </div>
 
 <body>

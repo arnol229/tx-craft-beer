@@ -59,7 +59,7 @@ class Bar(models.Model):
 		return self.name
 
 class Announcments(models.Model):
-	title=models.CharField(max_length=15)
+	name=models.CharField(max_length=15)
 	content=models.CharField(max_length=50)
 	pic=models.ImageField(upload_to="images/Announcments/")
 	url=models.CharField(max_length=20)
@@ -69,5 +69,5 @@ class Announcments(models.Model):
 		get_latest_by = "pub_date"
 		ordering = ['pub_date']
 	def __unicode__(self):
-		return self.title
+		return self.name
 

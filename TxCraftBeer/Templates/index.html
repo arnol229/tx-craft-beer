@@ -1,9 +1,23 @@
 {% extends "base.html" %}
 {% block body %}
-Search results for {{ query }} within the subject: {{ subject }}
+Search results for {{ query }} within the subject{{ subject|pluralize }}: {{ subject }}
 <br>
-{% for result in results %}
-{{ result }}
+{% if errors %}
+{% for error in errors %}
+{{ error }}
 <br>
 {% endfor %}
+{% endif %}
+
+{% for cat_name, cat_items, more in results.items %}
+<ul>
+Category:{{ cat_name }}
+<br>
+{% for items in cat_items %}
+<li>{{ items }}</li>
+<br>
+{% endfor %}
+</ul>
+{% endfor %}
+
 {% endblock %}
