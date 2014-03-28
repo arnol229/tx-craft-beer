@@ -87,6 +87,7 @@ def index(request):
 
 
 #### Specific views ######
+	#This can all be condensed to a generic view#
 def brewery(request, id):
 	result = Brewery.objects.filter(id=id)
 	context = {'result':result}

@@ -9,15 +9,21 @@ Search results for {{ query }} within the subject{{ subject|pluralize }}: {{ sub
 {% endfor %}
 {% endif %}
 
+<--!Search Results -->
+{% block searchresults %}
+
 {% for cat_name, cat_items, more in results.items %}
 <ul>
 Category:{{ cat_name }}
 <br>
-{% for items in cat_items %}
-<li>{{ items }}</li>
+{% for item in cat_items %}
+<li>{{ item }}<img src="{{ STATIC_URL }}{{ item.pic }}" /></li>
 <br>
 {% endfor %}
 </ul>
 {% endfor %}
+
+{% endblock %}
+
 
 {% endblock %}
