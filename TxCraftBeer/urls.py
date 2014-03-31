@@ -1,22 +1,23 @@
 from django.conf.urls import *
 from django.contrib import admin
-from views import home, index, brewery, brewpub, bar, beer
+from views import home, index, contentProfile, contentHome,contact
 from django.conf import settings
 
 admin.autodiscover()
 
 urlpatterns = patterns('',
 	(r'^$', home),
-	#(r'^contact/$', contact),
+	#contact
+	(r'^contact/$', contact),
 	#index
 	(r'^index/$', index),
-	#(r'^search/$', search),
-	#specifics
-	(r'^brewery/(?P<id>[/d]+)/$', brewery),
-	(r'^brewpub/(?P<id>[/d]+)/$', brewpub),
-	(r'^bar/(?P<id>[/d]+)/$', bar),
-	(r'^beer/(?P<id>[/d]+)/$', beer),
-	)
+	#content home views
+	(r'^(?P<subject>)/(?P<region>[a-zA-Z]+)/$', contentHome),
+	(r'^(?P<subject>)/$', contentHome),
+	#specific content views
+	(r'^(?P<subject>)/(?P<id>[/d]+)/$', contentProfile),
+)
+
 	
 
 urlpatterns += patterns('',

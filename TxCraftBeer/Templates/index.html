@@ -9,9 +9,11 @@ Search results for {{ query }} within the subject{{ subject|pluralize }}: {{ sub
 {% endfor %}
 {% endif %}
 
-<--!Search Results -->
+<!-- Search Results -->
 {% block searchresults %}
-
+{% if l %}
+# of results: {{ l }}
+{% endif %}
 {% for cat_name, cat_items, more in results.items %}
 <ul>
 Category:{{ cat_name }}

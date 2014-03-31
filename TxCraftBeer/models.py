@@ -7,6 +7,7 @@ class Brewery(models.Model):
 	address=models.CharField(max_length=50)
 	bio = models.CharField(max_length=500)
 	pic = models.ImageField(upload_to="images/Brewery/")
+	region = models.CharField(max_length=20)
 
 	class Meta:
 		ordering = ['name']
@@ -18,6 +19,7 @@ class BrewPub(models.Model):
 	name=models.CharField(max_length=20)
 	bio = models.CharField(max_length=500)
 	pic = models.ImageField(upload_to="images/BrewPub/")
+	region = models.CharField(max_length=20)
 
 	class Meta:
 		ordering = ['name']
@@ -52,6 +54,7 @@ class Bar(models.Model):
 	name = models.CharField(max_length=20)
 	bio=models.CharField(max_length=500)
 	pic=models.ImageField(upload_to="images/Bar/")
+	region = models.CharField(max_length=20)
 
 	class Meta:
 		ordering = ['name']

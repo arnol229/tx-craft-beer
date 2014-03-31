@@ -5,9 +5,10 @@ from django.db.models import get_model
 from django import forms
 from .models import Brewery, BrewPub, Beer, Bar, Announcments
 
+cases = ['Brewery','Brewpub','Bar','Beer','Announcments']
 
 ### Helper functions ###
-def _jason_response(context):
+def _json_response(context):
 	return HttpResponse(json.dumps(context), mimetype="application/json")
 
 def findAll(query):
@@ -38,8 +39,13 @@ def home(request):
 	context = {"content":content, "errors":errors}
 	return render(request, 'base.html', context)
 
+def contact(request):
+	context = None
+	return render(request, 'base.html', context)
+
 def index(request):
 	context = {}
+	reslngth = 5
 	##if subject, search it
 	if request.GET.get('s', None) and request.GET.get('q',None):
 		s = request.GET.get('s', None)
@@ -50,19 +56,21 @@ def index(request):
 				model = get_model('TxCraftBeer', s)
 				results = model.objects.filter(name__icontains=q)
 				context = {'results':results}
-				_jason_response(context)
+				_json_response(context)
 			except Exception as e:
 				context ={'results':e}
-				_jason_response(context)
+				_json_response(context)
 
 			#regular index
 		else:
 			try:
 				model = get_model('TxCraftBeer', s)
 				results = model.objects.filter(name__icontains=q)
+				reslngth = results.count()
+				results.append(htmlfile[s])# = htmlfile[s]
 			except Exception as e:
 				results = e
-			context = {'results':results,'subject':s,'query':q}
+			context = {'results':results,'subject':s,'query':q,"l":reslngth}
 			return render(request, 'index.html', context)
 
 		### if no subject, search everything
@@ -71,10 +79,10 @@ def index(request):
 		if request.is_ajax():
 			try:
 				context= findAll(q)
-				_jason_response(context)
+				_json_response(context)
 			except Exception as e:
 				context={'results':e}
-				_jason_response(context)
+				_json_response(context)
 		else:
 			context = findAll(q)
 			return render(request, 'index.html',context)
@@ -87,23 +95,26 @@ def index(request):
 
 
 #### Specific views ######
-	#This can all be condensed to a generic view#
-def brewery(request, id):
-	result = Brewery.objects.filter(id=id)
-	context = {'result':result}
-	return render(request, 'brewery.html', context)
+def contentHome(request, subject, region = None):
+	if region:
+		try:
+			model = get_model('TxCraftBeer', subject)
+			topresults = model.objects.filter(region__icontains=region)[0:4]
+		except Exception as e:
+			error = e
+			return render(request, '404.html', {'error':error})
+	else:
+		try:
+			topresults = subject.objects.order_by('-pk')[0:4]
+		except Exception as e:
+			error = e
+			return render(request, '404.html', {'error':error})
+	
+	context = {'results':topresults}
+	return render(request, 'contentHome.html', context)
 
-def brewpub(request, id):
-	result = BrewPub.objects.filter(id=id)
+def contentProfile(request, subject, id):
+	model = get_model('TxCraftBeer', subject)
+	result = model.objects.filter(id=id)
 	context = {'result':result}
-	return render(request, 'brewpub.html', context)
-
-def bar(request, id):
-	result = Bar.objects.filter(id=id)
-	context = {'result':result}
-	return render(request, 'bar.html', context)
-
-def beer(request, id):
-	result = Beer.objects.filter(id=id)
-	context = {'result':result}
-	return render(request, 'beer.html', context)
+	return render(request, 'contentProfile.html', context)
