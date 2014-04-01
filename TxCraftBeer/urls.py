@@ -12,7 +12,7 @@ urlpatterns = patterns('',
 	#index
 	(r'^index/$', index),
 	#content home views
-	(r'^(?P<subject>)/(?P<region>[a-zA-Z]+)/$', contentHome),
+	(r'^(?P<subject>)/(?P<region>)/$', contentHome),
 	(r'^(?P<subject>)/$', contentHome),
 	#specific content views
 	(r'^(?P<subject>)/(?P<id>[/d]+)/$', contentProfile),

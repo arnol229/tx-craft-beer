@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+{% load static %}
 <html>
 <title>
 Texas Craft Beer
@@ -6,49 +7,9 @@ Texas Craft Beer
 <head>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function(){
-			//menu dropdown
-			$(".menu").on('hover', function(e){
-				if (e.type == "mouseenter"){
-					$(this).children().css("display", true)
-				}
-				else{
-					$(this).children().css("display", none)
-				}
-			});
-
-			//ajax search
-			$("input#searchtext").on('keyup', function(e){
-				$.ajax({
-					type:"GET",
-					url: "search",
-					data: $(this).serialize(),
-					dataType: "json",
-					success: function( data ){
-						//eventually work in animation
-						//for swapping main body with new results
-						$("<body>").html(data.html)
-					},
-				});
-			});
-
-		})
-	</script>
-	<style>
-	.menu{
-		display: inline-block;
-		border-width: 10px;
-		border-color: black;
-		height: 50px;
-		width: 100px;
-		border-radius: 5px;
-		border: solid;
-	}
-	ul.submenu{
-
-	}
-	</style>
+	<link rel="stylesheet" type='text/css' src ="{% static 'css/base.css' %}">
+	<script type="text/javascript" src ="{% static 'js/menhov.js' %}"></script>
+	<script type="text/javascript" src ="{% static 'js/searjax.js' %}"></script>
 	<div id="logo">
 	<a href="/#">Texas Craft Beers</a>
 	</div>

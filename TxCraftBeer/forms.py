@@ -1,5 +1,5 @@
 from django import forms
-from .models import Brewery,BrewPub,Beer,Bar, Announcements
+from .models import Brewery,BrewPub,Beer,Bar, Announcement, Contact
 
 class Brewery(forms.ModelForm):
 	class meta:
@@ -17,6 +17,10 @@ class Bar(forms.ModelForm):
 	class meta:
 		model = Bar
 
-class Announcements(forms.ModelForm):
+class Announcement(forms.ModelForm):
 	class meta:
-		model = Announcements
+		model = Announcement
+
+class Contact(forms.Form):
+	class meta:
+		model = Contact

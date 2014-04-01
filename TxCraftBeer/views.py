@@ -1,38 +1,43 @@
 from django.shortcuts import render, render_to_response
 from django.template.context import RequestContext
 from django.db.models import get_model
+from django.http import Http404
 
-from django import forms
-from .models import Brewery, BrewPub, Beer, Bar, Announcments
+from .forms import Contact
+from .models import Brewery, BrewPub, Beer, Bar, Announcement, Contact
 
-cases = ['Brewery','Brewpub','Bar','Beer','Announcments']
+cases = ['Brewery','Brewpub','Bar','Beer','Announcement']
 
 ### Helper functions ###
 def _json_response(context):
 	return HttpResponse(json.dumps(context), mimetype="application/json")
 
 def findAll(query):
-	cases = ['Brewery','Brewpub','Bar','Beer','Announcments']
+	cases = ['Brewery','Brewpub','Bar','Beer','Announcement']
 	results = {}
 	subject = []
 	errors = []
 	toptwo=[]
 	context = {}
+	resultlength =0
 	for obj in cases:
-		subject.append(obj)
-		model = get_model('TxCraftBeer', obj)
-		if model.objects.filter(name__icontains=query):
-			new = {obj:model.objects.filter(name__icontains=query).order_by('name')}
-			results.update(new)
-
-	return {'results':results, 'query':query, 'errors':errors, 'subject':subject}
+		try:
+			subject.append(obj)
+			model = get_model('TxCraftBeer', obj)
+			if model.objects.filter(name__icontains=query):
+				new = {obj:model.objects.filter(name__icontains=query).order_by('name')}
+				results.update(new)
+				resultlength += len(new.items()[0])
+		except Exception as e:
+			errors.append(e)
+	return {'results':results, 'query':query, 'errors':errors, 'subject':subject, 'length':resultlength}
 
 ### Views ###
 def home(request):
 	content=None
 	errors=None
 	try:
-		content = Announcments.objects.order_by('-pk')[0:4]
+		content = Announcement.objects.order_by('-pk')[0:4]
 	except Exception as e:
 		errors = str(e)
 
@@ -40,52 +45,70 @@ def home(request):
 	return render(request, 'base.html', context)
 
 def contact(request):
-	context = None
+	if request.method == 'POST':
+		form = Contact(request.POST)
+		if form.is_valid():
+			subject = form.cleaned_data['subject']
+			body = form.cleaned_data['body']
+			sender = form.cleaned_data['sender']
+			NewMessage = Contact(subject, body, sender)
+			NewMessage.save()
+
+			response = "Thanks for your input!"
+			context = {'response':response}
+			_json_response(context)
+	else:
+		form = Contact()
+	return render(request, 'contact.html', {
+		'form':form
+		})
+
+
+
 	return render(request, 'base.html', context)
 
 def index(request):
 	context = {}
-	reslngth = 5
+	resultlength = 0
 	##if subject, search it
 	if request.GET.get('s', None) and request.GET.get('q',None):
 		s = request.GET.get('s', None)
 		q = request.GET.get('q',None)
 
-		if request.is_ajax():
-			try:
-				model = get_model('TxCraftBeer', s)
-				results = model.objects.filter(name__icontains=q)
-				context = {'results':results}
-				_json_response(context)
-			except Exception as e:
-				context ={'results':e}
-				_json_response(context)
+		try:
+			model = get_model('TxCraftBeer', s)
+			results = model.objects.filter(name__icontains=q)
+			resultlength = results.count()
+
+			if request.is_ajax():
+				try:
+					context = {'results':results,'subject':s,'query':q,"length":resultlength}
+					_json_response(context)
+				except Exception as e:
+					context ={'results':e}
+					_json_response(context)
 
 			#regular index
-		else:
-			try:
-				model = get_model('TxCraftBeer', s)
-				results = model.objects.filter(name__icontains=q)
-				reslngth = results.count()
-				results.append(htmlfile[s])# = htmlfile[s]
-			except Exception as e:
-				results = e
-			context = {'results':results,'subject':s,'query':q,"l":reslngth}
-			return render(request, 'index.html', context)
+			else:
+				context = {'results':results,'subject':s,'query':q,"length":resultlength}
+				return render(request, 'index.html', context)
+
+			#getting model doesnt work
+		except Exception as e:
+			results = e
 
 		### if no subject, search everything
 	elif not request.GET.get('s', None) and request.GET.get('q',None):
 		q = request.GET.get('q', None)
-		if request.is_ajax():
-			try:
-				context= findAll(q)
+		try:
+			context= findAll(q)
+			if request.is_ajax():
 				_json_response(context)
-			except Exception as e:
-				context={'results':e}
-				_json_response(context)
-		else:
-			context = findAll(q)
-			return render(request, 'index.html',context)
+			return render(request, 'index.html', context)
+
+		except Exception as e:
+			context={'results':e}
+			return render(request, 'index.html', context)
 
 		##no query.. how'd you get here?
 	else:
@@ -105,7 +128,8 @@ def contentHome(request, subject, region = None):
 			return render(request, '404.html', {'error':error})
 	else:
 		try:
-			topresults = subject.objects.order_by('-pk')[0:4]
+			model = get_model('TxCraftBeer', subject)
+			topresults = model.objects.order_by('-pk')[0:4]
 		except Exception as e:
 			error = e
 			return render(request, '404.html', {'error':error})
@@ -114,7 +138,11 @@ def contentHome(request, subject, region = None):
 	return render(request, 'contentHome.html', context)
 
 def contentProfile(request, subject, id):
-	model = get_model('TxCraftBeer', subject)
-	result = model.objects.filter(id=id)
-	context = {'result':result}
-	return render(request, 'contentProfile.html', context)
+	try:
+		model = get_model('TxCraftBeer', subject)
+		result = model.objects.filter(id=id)
+		context = {'result':result}
+		return render(request, 'contentProfile.html', context)
+	except Exception as e:
+		context = {'result': e}
+		return render(request, 'contentProfile.html', context)

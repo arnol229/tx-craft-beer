@@ -61,7 +61,7 @@ class Bar(models.Model):
 	def __unicode__(self):
 		return self.name
 
-class Announcments(models.Model):
+class Announcement(models.Model):
 	name=models.CharField(max_length=15)
 	content=models.CharField(max_length=50)
 	pic=models.ImageField(upload_to="images/Announcments/")
@@ -73,4 +73,9 @@ class Announcments(models.Model):
 		ordering = ['pub_date']
 	def __unicode__(self):
 		return self.name
+
+class Contact(models.Model):
+	subject = models.CharField(max_length=100)
+	body = models.CharField(max_length=200)
+	sender = models.EmailField()
 
