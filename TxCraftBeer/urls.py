@@ -12,16 +12,16 @@ urlpatterns = patterns('',
 	#index
 	(r'^index/$', index),
 	#content home views
-	(r'^(?P<subject>)/(?P<region>)/$', contentHome),
-	(r'^(?P<subject>)/$', contentHome),
+	(r'^content/(?P<subject>\w+)/(?P<region>\w+)/$', contentHome),
+	(r'^content/(?P<subject>\w+)/$', contentHome),
 	#specific content views
-	(r'^(?P<subject>)/(?P<id>[/d]+)/$', contentProfile),
+	(r'^content/(?P<subject>\w+)/(?P<id>[/d])/$', contentProfile),
 )
 
 	
 
 urlpatterns += patterns('',
 	(r'^admin/', include(admin.site.urls)),
-	(r'^media/(?P<path>.*)$', 'django.views.static.serve',
+	(r'^static/(?P<path>.*)$', 'django.views.static.serve',
 		{'document_root':settings.STATIC_ROOT}),
 	)

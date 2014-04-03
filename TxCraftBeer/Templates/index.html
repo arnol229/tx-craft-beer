@@ -2,33 +2,38 @@
 {% block body %}
 Search results for {{ query }} within the subject{{ subject|pluralize }}: {{ subject }}
 <br>
+<br>
 {% if errors %}
+<br>
 {% for error in errors %}
-{{ error }}
+error: {{ error }}
 <br>
 {% endfor %}
 {% endif %}
-
+<br>
 <!-- Search Results -->
+<div class = "SearchResults">
+<b>Search Results</b>
 {% block searchresults %}
 {% if length %}
 # of results: {{ length }}
 {% endif %}
-{% for cat_name, cat_items, more in results.items %}
+<br>
+<br>
+{% for cat, objs in results.items %}
 <ul>
-Category:{{ cat_name }}
+Category:{{ cat }}
+{% for obj in objs %}
+<li>{{ obj }}</li>
 <br>
-{% for item in cat_items %}
-<a href = '/{{ cat_name }}/{{ item.pk }}/'>
-	<li>{{ item }}</li>
-</a>
-<img src="{{ STATIC_URL }}{{ item.pic }}" height="100px" width = "100px" />
-<br>
+<img src={{ STATIC_URL }}{{ obj.pic }} height = '100' width = '100'>
 {% endfor %}
+<br>
+<br>
 </ul>
 {% endfor %}
-
+<br>
 {% endblock %}
-
+</div>
 
 {% endblock %}

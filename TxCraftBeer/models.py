@@ -67,7 +67,8 @@ class Announcement(models.Model):
 	pic=models.ImageField(upload_to="images/Announcments/")
 	url=models.CharField(max_length=20)
 	pub_date= models.DateField()
-
+	#region = models.CharField(max_length = 20)
+	
 	class Meta:
 		get_latest_by = "pub_date"
 		ordering = ['pub_date']

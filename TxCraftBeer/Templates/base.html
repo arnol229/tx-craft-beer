@@ -10,22 +10,37 @@ Texas Craft Beer
 	<link rel="stylesheet" type='text/css' src ="{% static 'css/base.css' %}">
 	<script type="text/javascript" src ="{% static 'js/menhov.js' %}"></script>
 	<script type="text/javascript" src ="{% static 'js/searjax.js' %}"></script>
+	<script>
+	$(document).ready(function(){
+		$('.menu').hover(
+			function(){
+				$(this).children().animate(
+				{"top":"+=50px"},"slow");
+
+			function(){
+				$(this).children().animate(
+					{"top":"-=50px"},"slow");
+			}
+	});
+	</script>
+
 	<div id="logo">
 	<a href="/#">Texas Craft Beers</a>
 	</div>
 
 	<ul class="main">
-		<a href="/brewery/">
+		<a href="/content/brewery/">
 		<li class="menu" id="Breweries">
 			<b>Breweries</b>
 			<ul class="submenu">
-				Region
-				<a href = '/brewery/Austin/'
+				<span>Region</span>
+				<br>
+				<a href = '/content/brewery/Austin/'
 				<li>
 					Austin
 				</li>
 			</a>
-			<a href = "/brewery/SanAntonio">
+			<a href = "/content/brewery/SanAntonio">
 				<li>
 					San Antonio
 				</li>
@@ -34,19 +49,19 @@ Texas Craft Beer
 		</li>
 	</a>
 
-	<a href="/BrewPubs/">
+	<a href="/content/BrewPub/">
 		<li class="menu" id="BrewPubs">
 			BrewPubs
 		</li>
 	</a>
 
-	<a href="/Bars/">
+	<a href="/content/Bar/">
 		<li class="menu" id="Bars">
 			Bars
 		</li>
 	</a>
 
-	<a href="/Beers/">
+	<a href="/content/Beer/">
 		<li class="menu" id="Beers">
 			Beers
 		</li>
@@ -55,7 +70,7 @@ Texas Craft Beer
 </head>
 
 <div class = "search">
-	<form action="/index/">
+	<form action="/index/" id = 'search'>
 	Search:<input id="searchtext" type="text" name="q">
 	{% block search %}
 	{% endblock %}

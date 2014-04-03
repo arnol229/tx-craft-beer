@@ -17,17 +17,18 @@ def findAll(query):
 	results = {}
 	subject = []
 	errors = []
-	toptwo=[]
 	context = {}
 	resultlength =0
+	newresults = []
+	resultspec =[]
 	for obj in cases:
 		try:
 			subject.append(obj)
 			model = get_model('TxCraftBeer', obj)
 			if model.objects.filter(name__icontains=query):
-				new = {obj:model.objects.filter(name__icontains=query).order_by('name')}
-				results.update(new)
-				resultlength += len(new.items()[0])
+				new = (model.objects.filter(name__icontains=query).order_by('name'))
+				results[obj] =new
+				resultlength += new.count()
 		except Exception as e:
 			errors.append(e)
 	return {'results':results, 'query':query, 'errors':errors, 'subject':subject, 'length':resultlength}
@@ -39,7 +40,7 @@ def home(request):
 	try:
 		content = Announcement.objects.order_by('-pk')[0:4]
 	except Exception as e:
-		errors = str(e)
+		errors = e
 
 	context = {"content":content, "errors":errors}
 	return render(request, 'base.html', context)
@@ -81,12 +82,8 @@ def index(request):
 			resultlength = results.count()
 
 			if request.is_ajax():
-				try:
-					context = {'results':results,'subject':s,'query':q,"length":resultlength}
-					_json_response(context)
-				except Exception as e:
-					context ={'results':e}
-					_json_response(context)
+				context = {'results':results,'subject':s,'query':q,"length":resultlength}
+				_json_response(context)
 
 			#regular index
 			else:
@@ -95,7 +92,8 @@ def index(request):
 
 			#getting model doesnt work
 		except Exception as e:
-			results = e
+			errors = e
+			return render(request, 'index.html', {'errors':errors, 'results': results})
 
 		### if no subject, search everything
 	elif not request.GET.get('s', None) and request.GET.get('q',None):
@@ -107,31 +105,36 @@ def index(request):
 			return render(request, 'index.html', context)
 
 		except Exception as e:
-			context={'results':e}
+			context={'errors':e}
 			return render(request, 'index.html', context)
 
 		##no query.. how'd you get here?
 	else:
-		results = "how'd you get here?"
-		context = {'results':results}
-		return render(request, 'index.html', context)
+		if request.GET.get('q',None) == '':
+			error = ["no query!",]
+			context = {'errors':error}
+			return render(request, 'index.html', context)
+		else:
+			error = ["how'd you get here?",]
+			context = {'errors':error}
+			return render(request, 'index.html', context)
 
 
 #### Specific views ######
-def contentHome(request, subject, region = None):
+def contentHome(request, subject, region=None):
 	if region:
 		try:
 			model = get_model('TxCraftBeer', subject)
 			topresults = model.objects.filter(region__icontains=region)[0:4]
 		except Exception as e:
-			error = e
+			error = [e,"it got a region but failed!"]
 			return render(request, '404.html', {'error':error})
 	else:
 		try:
 			model = get_model('TxCraftBeer', subject)
 			topresults = model.objects.order_by('-pk')[0:4]
 		except Exception as e:
-			error = e
+			error = [e,"it didnt get a region!"]
 			return render(request, '404.html', {'error':error})
 	
 	context = {'results':topresults}
