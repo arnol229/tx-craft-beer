@@ -136,8 +136,8 @@ def contentHome(request, subject, region=None):
 		except Exception as e:
 			error = [e,"it didnt get a region!"]
 			return render(request, '404.html', {'error':error})
-	
-	context = {'results':topresults}
+	vid = "videos/"+subject+"/home.mp4"
+	context = {'results':topresults, 'vid':vid}
 	return render(request, 'contentHome.html', context)
 
 def contentProfile(request, subject, id):

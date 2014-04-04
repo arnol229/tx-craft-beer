@@ -1,6 +1,14 @@
 {% extends 'base.html'%}
 
 {% block body %}
+<b>This would be the contents video..</b>
+<div id="video-container">
+	<b>This would be the contents video..</b>
+	<video id="background-video" width='500px' height='400px' muted loop autoplay = 'true'>Your browser does not support the video.
+		<source src = {{ STATIC_URL }}{{ vid }} type="video/mp4">
+	</video>
+</div>
+{{ STATIC_URL }}{{ vid }}
 <ul id = "results">
 {% for result in results %}
 <li>{{ result }}</li>

@@ -1,0 +1,9 @@
+.menu{
+		display:inline-block;
+		border-width:10px;
+		border-color:black;
+		height:50px;
+		width:100px;
+		border-radius:5px;
+		border:solid;
+	}
