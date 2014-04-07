@@ -18,21 +18,11 @@ class Brewery(models.Model):
 
 class BrewPub(models.Model):
 	name=models.CharField(max_length=20)
+	onTap = models.CharField(max_length=100)
 	bio = models.CharField(max_length=500)
 	pic = models.ImageField(upload_to="images/BrewPub/")
 	region = models.CharField(max_length=20)
 	video = models.FileField(upload_to="video/BrewPub/")
-
-	class Meta:
-		ordering = ['name']
-	def __unicode__(self):
-		return self.name
-
-class Beer(models.Model):
-	name=models.CharField(max_length=20)
-	brewery=models.ForeignKey(Brewery)
-	bio = models.CharField(max_length=500)
-	pic = models.ImageField(upload_to="images/Beer/")
 
 	class Meta:
 		ordering = ['name']
@@ -54,10 +44,23 @@ class BrewPubBeer(models.Model):
 
 class Bar(models.Model):
 	name = models.CharField(max_length=20)
-	bio=models.CharField(max_length=500)
-	pic=models.ImageField(upload_to="images/Bar/")
+	about = models.CharField(max_length=500)
+	pic = models.ImageField(upload_to="images/Bar/")
 	region = models.CharField(max_length=20)
 	video = models.FileField(upload_to="video/Bar")
+
+	class Meta:
+		ordering = ['name']
+	def __unicode__(self):
+		return self.name
+
+class Beer(models.Model):
+	name=models.CharField(max_length=20)
+	style = models.CharField(max_length=20)
+	brewery=models.ForeignKey(Brewery)
+	bar = models.ManyToManyField(Bar, blank=True)
+	bio = models.CharField(max_length=500)
+	pic = models.ImageField(upload_to="images/Beer/")
 
 	class Meta:
 		ordering = ['name']
@@ -83,3 +86,6 @@ class Contact(models.Model):
 	body = models.CharField(max_length=200)
 	sender = models.EmailField()
 
+#class Image(models.Model):
+#	name = models.CharField(max_length=20)
+#	image = models.ImageField(upload_to="images")

@@ -143,9 +143,22 @@ def contentHome(request, subject, region=None):
 def contentProfile(request, subject, id):
 	try:
 		model = get_model('TxCraftBeer', subject)
-		result = model.objects.filter(id=id)
-		context = {'result':result}
+		result = model.objects.get(id=id)
+		try:
+			beers = result.beer_set.all()
+		except Exception as e:
+			context = {'error': "it screwed up here. haha you suck...{0}".format(e)}
+			return render(request, 'contentProfile.html', context)
+		#beerfilter = {'{0}__name__icontains'.format(subject):result.name}
+		#beers = Beers.objects.filter(**beerfilter)
+		#glimpse = None# pictures for gallery? parse files in directory?
+		context = {
+		'beers':beers,
+		'video':result.video,
+		'pic':result.pic, 
+		#'glimpse',glimpse,
+		}
 		return render(request, 'contentProfile.html', context)
 	except Exception as e:
-		context = {'result': e}
+		context = {'error': e}
 		return render(request, 'contentProfile.html', context)
