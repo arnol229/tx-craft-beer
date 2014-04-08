@@ -4,7 +4,7 @@ from django.db.models import get_model
 from django.http import Http404
 
 from .forms import Contact
-from .models import Brewery, BrewPub, Beer, Bar, Announcement, Contact
+from .models import Brewery, BrewPub, Beer, Bar, Announcement, Contact, Image, Video
 
 cases = ['Brewery','Brewpub','Bar','Beer','Announcement']
 
@@ -17,10 +17,7 @@ def findAll(query):
 	results = {}
 	subject = []
 	errors = []
-	context = {}
 	resultlength =0
-	newresults = []
-	resultspec =[]
 	for obj in cases:
 		try:
 			subject.append(obj)
@@ -141,24 +138,39 @@ def contentHome(request, subject, region=None):
 	return render(request, 'contentHome.html', context)
 
 def contentProfile(request, subject, id):
+	errors = []
 	try:
 		model = get_model('TxCraftBeer', subject)
 		result = model.objects.get(id=id)
 		try:
 			beers = result.beer_set.all()
+		except AttributeError as e:
+			#if error, it must be beer.
+			errors.append('we couldnt get beer_set: {0}'.format(e))
+			try:
+				beers = result.bar.all()
+			except Exception as e:
+				errors.append("it screwed up again: {0}".format(e))
+				context = {'errors': errors}
+				return render(request, 'contentProfile.html', context)
+
+		try:
+			pics = Image.objects.get(object_id=id)
 		except Exception as e:
-			context = {'error': "it screwed up here. haha you suck...{0}".format(e)}
-			return render(request, 'contentProfile.html', context)
-		#beerfilter = {'{0}__name__icontains'.format(subject):result.name}
-		#beers = Beers.objects.filter(**beerfilter)
-		#glimpse = None# pictures for gallery? parse files in directory?
+			pics = e
+		try:
+			video = Video.objects.get(object_id=id)
+		except Exception as e:
+			video=e
+
 		context = {
+		'errors':errors,
 		'beers':beers,
-		'video':result.video,
-		'pic':result.pic, 
-		#'glimpse',glimpse,
+		'pics':pics,
+		'video':video, 
 		}
 		return render(request, 'contentProfile.html', context)
 	except Exception as e:
-		context = {'error': e}
+		errors.append('FAILURE!: {0}'.format(e))
+		context = {'errors': errors}
 		return render(request, 'contentProfile.html', context)

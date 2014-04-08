@@ -1,6 +1,7 @@
 {% extends 'base.html'%}
 
 {% block body %}
+{% load extra_tags %}
 <b>This would be the contents video..</b>
 <div id="video-container">
 	<b>This would be the contents video..</b>
@@ -11,7 +12,7 @@
 {{ STATIC_URL }}{{ vid }}
 <ul id = "results">
 {% for result in results %}
-<li>{{ result }}</li>
+<li><a href = '/content/{{ result | classname }}/{{ result.id }}/'>{{ result }}</a></li>
 {% endfor %}
 </ul>
 {% endblock %}

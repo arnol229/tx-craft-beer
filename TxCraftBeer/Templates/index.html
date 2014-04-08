@@ -24,7 +24,7 @@ error: {{ error }}
 <ul>
 Category:{{ cat }}
 {% for obj in objs %}
-<li>{{ obj }}</li>
+<li><a href = '/content/{{ cat }}/{{ obj.id }}'>{{ obj }}</a></li>
 <br>
 <img src={{ STATIC_URL }}{{ obj.pic }} height = '100' width = '100'>
 {% endfor %}

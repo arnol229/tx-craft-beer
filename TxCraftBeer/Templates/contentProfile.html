@@ -2,9 +2,13 @@
 {% block body %}
 {{ result }}<br>
 <div>
-{{ beers }}<br>
-{{ video }}<br>
-{{ pic }}<br>
-error:
+beers:{{ beers }}<br>
+video:{{ video }}<br>
+pics:{{ pics }}<br>
+error:{% for error in errors %}
+<br>
 {{ error }}
+
+{% endfor %}
+<br>
 {% endblock %}

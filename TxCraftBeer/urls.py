@@ -12,10 +12,10 @@ urlpatterns = patterns('',
 	#index
 	(r'^index/$', index),
 	#content home views
-	(r'^content/(?P<subject>\w+)/(?P<region>[\b+])/$', contentHome),
+	(r'^content/(?P<subject>\w+)/(?P<region>[A-Za-z]+)/$', contentHome),
 	(r'^content/(?P<subject>\w+)/$', contentHome),
 	#specific content views
-	(r'^content/(?P<subject>\w+)/(?P<id>\d+)/$', contentProfile),
+	(r'^content/(?P<subject>\w+)/(?P<id>[0-9]+)/$', contentProfile),
 )
 
 	

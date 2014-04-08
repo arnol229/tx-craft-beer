@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.contenttypes.models import ContentType
+from django.contrib.contenttypes import generic
 import os
 import datetime
 
@@ -6,9 +8,7 @@ class Brewery(models.Model):
 	name=models.CharField(max_length=20)
 	address=models.CharField(max_length=50)
 	bio = models.CharField(max_length=500)
-	pic = models.ImageField(upload_to="images/Brewery/")
 	region = models.CharField(max_length=20)
-	video = models.FileField(upload_to="video/Brewery/")
 
 	class Meta:
 		ordering = ['name']
@@ -20,9 +20,7 @@ class BrewPub(models.Model):
 	name=models.CharField(max_length=20)
 	onTap = models.CharField(max_length=100)
 	bio = models.CharField(max_length=500)
-	pic = models.ImageField(upload_to="images/BrewPub/")
 	region = models.CharField(max_length=20)
-	video = models.FileField(upload_to="video/BrewPub/")
 
 	class Meta:
 		ordering = ['name']
@@ -33,7 +31,6 @@ class BrewPubBeer(models.Model):
 	name=models.CharField(max_length=20)
 	brewpub=models.ForeignKey(BrewPub)
 	bio = models.CharField(max_length=500)
-	pic = models.ImageField(upload_to="images/BrewPubBeer/")
 
 	class Meta:
 		ordering = ['name']
@@ -45,9 +42,7 @@ class BrewPubBeer(models.Model):
 class Bar(models.Model):
 	name = models.CharField(max_length=20)
 	about = models.CharField(max_length=500)
-	pic = models.ImageField(upload_to="images/Bar/")
 	region = models.CharField(max_length=20)
-	video = models.FileField(upload_to="video/Bar")
 
 	class Meta:
 		ordering = ['name']
@@ -60,7 +55,6 @@ class Beer(models.Model):
 	brewery=models.ForeignKey(Brewery)
 	bar = models.ManyToManyField(Bar, blank=True)
 	bio = models.CharField(max_length=500)
-	pic = models.ImageField(upload_to="images/Beer/")
 
 	class Meta:
 		ordering = ['name']
@@ -70,7 +64,6 @@ class Beer(models.Model):
 class Announcement(models.Model):
 	name=models.CharField(max_length=15)
 	content=models.CharField(max_length=50)
-	pic=models.ImageField(upload_to="images/Announcments/")
 	url=models.CharField(max_length=20)
 	pub_date= models.DateField()
 	#region = models.CharField(max_length = 20)
@@ -86,6 +79,23 @@ class Contact(models.Model):
 	body = models.CharField(max_length=200)
 	sender = models.EmailField()
 
-#class Image(models.Model):
-#	name = models.CharField(max_length=20)
-#	image = models.ImageField(upload_to="images")
+##ContentTypes
+class Image(models.Model):
+	name = models.CharField(max_length=20)
+	image = models.ImageField(upload_to="images")
+	content_type= models.ForeignKey(ContentType)
+	object_id = models.PositiveIntegerField()
+	content_object = generic.GenericForeignKey('content_type', 'object_id')
+
+	def __unicode__(self):
+		return self.name
+
+class Video(models.Model):
+	name = models.CharField(max_length=20)
+	video = models.FileField(upload_to='video/')
+	content_type=models.ForeignKey(ContentType)
+	object_id = models.PositiveIntegerField()
+	content_object=generic.GenericForeignKey('content_type', 'object_id')
+
+	def __unicode__(self):
+		return self.name
