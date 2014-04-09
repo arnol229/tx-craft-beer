@@ -1,5 +1,7 @@
 from django import forms
-from .models import Brewery,BrewPub,Beer,Bar, Announcement, Contact
+from django.contrib import admin
+from django.forms.fields import ChoiceField
+from .models import Brewery,BrewPub, BrewPubBeer, Beer,Bar, Announcement, Contact, Image, Video
 
 class Brewery(forms.ModelForm):
 	class meta:
@@ -24,3 +26,7 @@ class Announcement(forms.ModelForm):
 class Contact(forms.Form):
 	class meta:
 		model = Contact
+
+class Image(forms.ModelForm):
+	class Meta:
+		model = Image

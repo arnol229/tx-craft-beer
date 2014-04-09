@@ -155,11 +155,11 @@ def contentProfile(request, subject, id):
 				return render(request, 'contentProfile.html', context)
 
 		try:
-			pics = Image.objects.get(object_id=id)
+			pics = Image.objects.get(object_id=id,subject=subject)
 		except Exception as e:
 			pics = e
 		try:
-			video = Video.objects.get(object_id=id)
+			video = Video.objects.get(object_id=id, subject=subject)
 		except Exception as e:
 			video=e
 
