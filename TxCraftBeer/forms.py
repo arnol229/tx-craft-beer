@@ -27,6 +27,6 @@ class Contact(forms.Form):
 	class meta:
 		model = Contact
 
-class Image(forms.ModelForm):
+class ImageForm(forms.ModelForm):
 	class Meta:
 		model = Image

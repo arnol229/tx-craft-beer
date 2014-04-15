@@ -1,7 +1,10 @@
 from django.shortcuts import render, render_to_response
 from django.template.context import RequestContext
 from django.db.models import get_model
-from django.http import Http404
+from django.http import Http404, HttpResponse
+from django.contrib.contenttypes.models import ContentType
+#from django.core import serializers
+
 
 from .forms import Contact
 from .models import Brewery, BrewPub, Beer, Bar, Announcement, Contact, Image, Video
@@ -155,11 +158,17 @@ def contentProfile(request, subject, id):
 				return render(request, 'contentProfile.html', context)
 
 		try:
-			pics = Image.objects.get(object_id=id,subject=subject)
+			content = ContentType.objects.get_for_model(result)
+			pics = Image.objects.filter(content_type=content, object_id=result.id)
+		except Image.DoesNotExist:
+			pics="does not exist!"
 		except Exception as e:
 			pics = e
 		try:
-			video = Video.objects.get(object_id=id, subject=subject)
+			content = ContentType.objects.get_for_model(result)
+			video = Video.objects.filter(content_type=content, object_id=result.id)
+		except Video.DoesNotExist:
+			video="does not exist!"
 		except Exception as e:
 			video=e
 
@@ -174,3 +183,10 @@ def contentProfile(request, subject, id):
 		errors.append('FAILURE!: {0}'.format(e))
 		context = {'errors': errors}
 		return render(request, 'contentProfile.html', context)
+
+
+
+###       ADMIN VIEWS      ###
+
+def admin_home(request):
+	return HttpResponse('Under Construction')

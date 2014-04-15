@@ -3,7 +3,18 @@
 		border-width:10px;
 		border-color:black;
 		height:50px;
-		width:100px;
+		width:150px;
 		border-radius:5px;
 		border:solid;
+		top:100px;
+		left:0px;
+		text-align:center;
 	}
+
+.menu ul{
+	font-size:20px;
+}
+
+.menu ul li{
+	font-size: 40px;
+}

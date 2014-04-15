@@ -49,8 +49,7 @@ class Bar(models.Model):
 	class Meta:
 		ordering = ['name']
 	def __unicode__(self):
-		return str(self.name)
-
+		return self.name
 class Beer(models.Model):
 	name=models.CharField(max_length=20)
 	style = models.CharField(max_length=20)
@@ -82,61 +81,37 @@ class Contact(models.Model):
 	sender = models.EmailField()
 
 ##ContentTypes
-
-class Image(models.Model):
-	BAR='Bar'
-	BEER ='Beer'
-	BREWPUB ='BrewPub'
-	BREWPUBBEER ='BrewPub Beer'
-	BREWERY ='Brewery'
-	ANNOUNCEMENT ='Announcement'
-	OBJECT_CHOICES = (
-		(BAR, tuple(Bar.objects.values_list('id','name')),),
-		(BEER, tuple(Beer.objects.values_list('id','name')),),
-		(BREWPUB, tuple(BrewPub.objects.values_list('id','name')),),
-		(BREWPUBBEER, tuple(BrewPubBeer.objects.values_list('id','name')),),
-		(BREWERY, tuple(Brewery.objects.values_list('id','name')),),
-		(ANNOUNCEMENT, tuple(Announcement.objects.values_list('id','name')),),)
-
+BAR='Bar'
+BEER ='Beer'
+BREWPUB ='BrewPub'
+BREWPUBBEER ='BrewPub Beer'
+BREWERY ='Brewery'
+ANNOUNCEMENT ='Announcement'
+CHOICES = (
+	(BAR, list(Bar.objects.values_list('id','name')),),
+	(BEER, list(Beer.objects.values_list('id','name')),),
+	(BREWPUB, list(BrewPub.objects.values_list('id','name')),),
+	(BREWPUBBEER, list(BrewPubBeer.objects.values_list('id','name')),),
+	(BREWERY, list(Brewery.objects.values_list('id','name')),),
+	(ANNOUNCEMENT, list(Announcement.objects.values_list('id','name')),),)
 #Would preferably have 1 selection that gets both object id's and model name
 #to supply content_type and object ID.. 
-
-	obj = models.CharField(max_length= 20, choices=OBJECT_CHOICES)
-	name = models.CharField(max_length=20)
+class Image(models.Model):
+	#obj = models.CharField(max_length= 20, choices=OBJECT_CHOICES)
+	name = models.CharField(max_length= 20)
 	image = models.ImageField(upload_to="images")
-	content_type= models.ForeignKey(ContentType)
-	object_id = obj
+	content_type= models.ForeignKey(ContentType, limit_choices_to={"app_label":"TxCraftBeer"})
+	object_id = models.PositiveIntegerField(choices = CHOICES)
 	content_object = generic.GenericForeignKey('content_type', 'object_id')
 
 	def __unicode__(self):
 		return self.name
 
 class Video(models.Model):
-	BAR='Bar'
-	BEER ='Beer'
-	BREWPUB ='BrewPub'
-	BREWPUBBEER ='BrewPub Beer'
-	BREWERY ='Brewery'
-	ANNOUNCEMENT =' Announcement'
-	TYPE_OF_SUBJECT_CHOICES = (
-		(BAR, (
-			('test','test'),
-			('test1', 'test1'),
-			)
-		),
-		(BEER, (
-			('test','test'),
-			('test1', 'test1'),
-			)
-		),
-		(BREWPUB, 'BrewPub'),
-		(BREWPUBBEER, 'BrewPub Beer'),
-		(BREWERY, 'Brewery'),
-		(ANNOUNCEMENT, ' Announcement'),)
 	name = models.CharField(max_length=20)
-	video = models.FileField(upload_to='video/')
-	subject=models.CharField(max_length=15,choices = TYPE_OF_SUBJECT_CHOICES)
-	content_type=models.ForeignKey(ContentType)
+	video = models.FileField(upload_to='videos')
+	#subject=models.CharField(max_length=15,choices = CHOICES)
+	content_type=models.ForeignKey(ContentType, limit_choices_to={"app_label":"TxCraftBeer"})
 	object_id = models.PositiveIntegerField()
 	content_object=generic.GenericForeignKey('content_type', 'object_id')
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-{% load static %}
+{% load staticfiles %}
 <html>
 <title>
 Texas Craft Beer
@@ -7,44 +7,42 @@ Texas Craft Beer
 <head>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-	<link rel="stylesheet" type='text/css' src ="{% static 'css/base.css' %}">
-	<script type="text/javascript" src ="{% static 'js/menhov.js' %}"></script>
-	<script type="text/javascript" src ="{% static 'js/searjax.js' %}"></script>
+	<link rel="stylesheet" type='text/css' href ="{{ STATIC_URL }}css/base.css">
+{% block extrahead %}
+{% endblock %}
 	<script>
 	$(document).ready(function(){
 		$('.menu').hover(
 			function(){
-				$(this).children().animate(
+				$(this).find(".submenu").animate(
 				{"top":"+=50px"},"slow");
-
+			},
 			function(){
-				$(this).children().animate(
+				$(this).find(".submenu").animate(
 					{"top":"-=50px"},"slow");
-			}
-	});
+			});
 	</script>
 
 	<div id="logo">
 	<a href="/#">Texas Craft Beers</a>
 	</div>
-
-	<ul class="main">
-		<a href="/content/brewery/">
+<div id='nav-wrapper>'
+<ul class="main">
+	<a href="/content/brewery/">
 		<li class="menu" id="Breweries">
 			<b>Breweries</b>
 			<ul class="submenu">
 				<span>Region</span>
-				<br>
 				<a href = '/content/brewery/Austin/'
 				<li>
 					Austin
 				</li>
-			</a>
-			<a href = "/content/brewery/SanAntonio">
+				</a>
+				<a href = "/content/brewery/SanAntonio">
 				<li>
 					San Antonio
 				</li>
-			</a>
+				</a>
 			</ul>
 		</li>
 	</a>
@@ -64,9 +62,19 @@ Texas Craft Beer
 	<a href="/content/Beer/">
 		<li class="menu" id="Beers">
 			Beers
+			<b>Type</b>
+			<ul id='submenu'>
+			<li>
+				IPA
+			</li>
+			<li>
+				Hefe
+			</li>
+			</ul>
 		</li>
 	</a>
-	</ul>
+</ul>
+</div>
 </head>
 
 <div class = "search">
