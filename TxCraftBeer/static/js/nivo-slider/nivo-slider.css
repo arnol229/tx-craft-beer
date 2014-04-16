@@ -8,24 +8,34 @@
  */
  
 /* The Nivo Slider styles */
+.theme-default .nivoSlider img {
+    position:absolute;
+    top:0px;
+    left:0px;
+    display:none;
+    width: 500px;
+    height: 500px !important;
+}
 .nivoSlider {
-	position:relative;
-	height:100px;
-	width:auto;
+	position:absolute;
+	height:500px;
+	width:500px;
 	overflow: hidden;
 }
 .nivoSlider img {
 	position:absolute;
 	border:black;
 	border-style:solid;
-	height:500px;
-	width:50%;
-	max-width: none;
+	height:100%;
+	width:100%;
+	max-width: 500px;
+	max-height: 500px;
 }
 .nivo-main-image {
 	display: block !important;
 	position: relative !important; 
-	width: 50% !important;
+	width: 100% !important;
+	height:500px;
 }
 
 /* If an image is wrapped in a link */
@@ -58,7 +68,11 @@
 	z-index:5;
 	overflow:hidden;
 }
-.nivo-box img { display:block; }
+.nivo-box img { 
+	display:block;
+	width:500px;
+	height:500px;
+ }
 
 /* Caption styles */
 .nivo-caption {

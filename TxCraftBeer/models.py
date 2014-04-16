@@ -96,6 +96,8 @@ CHOICES = (
 	(ANNOUNCEMENT, list(Announcement.objects.values_list('id','name')),),)
 #Would preferably have 1 selection that gets both object id's and model name
 #to supply content_type and object ID.. 
+
+## add thumbnails for images for slideshow
 class Image(models.Model):
 	#obj = models.CharField(max_length= 20, choices=OBJECT_CHOICES)
 	name = models.CharField(max_length= 20)

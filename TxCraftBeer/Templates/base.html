@@ -6,77 +6,81 @@ Texas Craft Beer
 </title>
 <head>
 	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>
+	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
 	<link rel="stylesheet" type='text/css' href ="{{ STATIC_URL }}css/base.css">
 {% block extrahead %}
 {% endblock %}
 	<script>
-	$(document).ready(function(){
-		$('.menu').hover(
-			function(){
-				$(this).find(".submenu").animate(
-				{"top":"+=50px"},"slow");
-			},
-			function(){
-				$(this).find(".submenu").animate(
-					{"top":"-=50px"},"slow");
-			});
+$(document).load(function(){
+	$('.navbutton').live('mouseenter mouseleave', function(e){
+		if (e.type == "mouseenter"){
+			$(this).find('#submenu').show();
+		}
+		else {
+			$(this).find('#submenu').hide();
+		}
+	});
+});
 	</script>
-
+<div class ="topbar">
+<div class = "logo-wrapper">
 	<div id="logo">
-	<a href="/#">Texas Craft Beers</a>
+	<a href="/#">
+	<img src="{{ STATIC_URL }}images/craftbrewlogo.jpg" /></a>
 	</div>
-<div id='nav-wrapper>'
-<ul class="main">
+</div>
+
+<div id='nav-wrapper'>
+<div class="menu">
 	<a href="/content/brewery/">
-		<li class="menu" id="Breweries">
-			<b>Breweries</b>
-			<ul class="submenu">
+		<div class="navbutton" id="Breweries">
+			Breweries
+			<ul id="submenu">
 				<span>Region</span>
-				<a href = '/content/brewery/Austin/'
-				<li>
-					Austin
-				</li>
-				</a>
+				<a href = '/content/brewery/Austin/'>
+				<li>Austin</li></a>
+
 				<a href = "/content/brewery/SanAntonio">
-				<li>
-					San Antonio
-				</li>
-				</a>
+				<li>San Antonio</li></a>
 			</ul>
-		</li>
+		</div>
 	</a>
 
 	<a href="/content/BrewPub/">
-		<li class="menu" id="BrewPubs">
+		<div class="navbutton" id="BrewPubs">
 			BrewPubs
-		</li>
+			<ul id="submenu">
+				<span>Region</span>
+				<li><a href = '/content/brewery/Austin/'>
+				Austin</a></li>
+
+				<li><a href = "/content/brewery/SanAntonio">
+				San Antonio</a></li>
+			</ul>
+		</div>
 	</a>
 
 	<a href="/content/Bar/">
-		<li class="menu" id="Bars">
+		<div class="navbutton" id="Bars">
 			Bars
-		</li>
+		</div>
 	</a>
 
 	<a href="/content/Beer/">
-		<li class="menu" id="Beers">
-			Beers
-			<b>Type</b>
-			<ul id='submenu'>
-			<li>
-				IPA
-			</li>
-			<li>
-				Hefe
-			</li>
+		<div class="navbutton" id="Beers">
+			Beers</a>
+			<ul id="submenu">
+			<span>Type</span>
+			<li>IPA</li>
+			<li>Hefe</li>
 			</ul>
-		</li>
+		</div>
 	</a>
-</ul>
+</div>
 </div>
 </head>
-
+<div class="search-wrapper">
 <div class = "search">
 	<form action="/index/" id = 'search'>
 	Search:<input id="searchtext" type="text" name="q">
@@ -85,7 +89,9 @@ Texas Craft Beer
 	<input type="submit" value="Submit" />
 	</form>
 </div>
+</div>
 
+</div>
 <body>
 {% block body %}
 
@@ -125,8 +131,12 @@ Texas Craft Beer
 
 {%  endblock %}
 </body>
-<footer>
+<div class="site-footer">
+	<div class="main-footer"
+</div>
+<div class="secondary-footer">
 	Site made by idiots </br>
 	arnol229@gmail.com
-</footer>
+</div>
+</div>
 </html>
