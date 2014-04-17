@@ -31,7 +31,11 @@ def findAll(query):
 				resultlength += new.count()
 		except Exception as e:
 			errors.append(e)
-	return {'results':results, 'query':query, 'errors':errors, 'subject':subject, 'length':resultlength}
+	return {'results':results,
+			'query':query, 
+			'errors':errors, 
+			'subject':subject, 
+			'length':resultlength}
 
 ### Views ###
 def home(request):
@@ -75,7 +79,11 @@ def index(request):
 	if request.GET.get('s', None) and request.GET.get('q',None):
 		s = request.GET.get('s', None)
 		q = request.GET.get('q',None)
-
+		if s == 'all':
+			context= findAll(q)
+			if request.is_ajax():
+				_json_response(context)
+			return render(request, 'index.html', context)
 		try:
 			model = get_model('TxCraftBeer', s)
 			results = model.objects.filter(name__icontains=q)
@@ -93,7 +101,7 @@ def index(request):
 			#getting model doesnt work
 		except Exception as e:
 			errors = e
-			return render(request, 'index.html', {'errors':errors, 'results': results})
+			return render(request, 'index.html', {'errors':errors})
 
 		### if no subject, search everything
 	elif not request.GET.get('s', None) and request.GET.get('q',None):
@@ -128,7 +136,7 @@ def contentHome(request, subject, region=None):
 			topresults = model.objects.filter(region__icontains=region)[0:4]
 		except Exception as e:
 			error = [e,"it got a region but failed!"]
-			return render(request, '404.html', {'error':error})
+			return render(request, '404.html', {'error':error, 'subject':subject})
 	else:
 		try:
 			model = get_model('TxCraftBeer', subject)
@@ -137,7 +145,7 @@ def contentHome(request, subject, region=None):
 			error = [e,"it didnt get a region!"]
 			return render(request, '404.html', {'error':error})
 	vid = "videos/"+subject+"/home.mp4"
-	context = {'results':topresults, 'vid':vid}
+	context = {'results':topresults, 'vid':vid, 'subject':subject}
 	return render(request, 'contentHome.html', context)
 
 def contentProfile(request, subject, id):
@@ -147,11 +155,13 @@ def contentProfile(request, subject, id):
 		result = model.objects.get(id=id)
 		try:
 			beers = result.beer_set.all()
+			bars = None
 		except AttributeError as e:
 			#if error, it must be beer.
 			errors.append('we couldnt get beer_set: {0}'.format(e))
+			beers = None
 			try:
-				beers = result.bar.all()
+				bars = result.bar.all()
 			except Exception as e:
 				errors.append("it screwed up again: {0}".format(e))
 				context = {'errors': errors}
@@ -177,6 +187,7 @@ def contentProfile(request, subject, id):
 		'beers':beers,
 		'pics':pics,
 		'video':video, 
+		'bars':bars
 		}
 		return render(request, 'contentProfile.html', context)
 	except Exception as e:

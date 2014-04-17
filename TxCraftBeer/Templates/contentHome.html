@@ -1,8 +1,9 @@
 {% extends 'base.html'%}
-
-{% block body %}
 {% load extra_tags %}
-<b>This would be the contents video..</b>
+{% block search %}
+<input type="hidden" value="{{ subject }}" name="s">
+{% endblock %}
+{% block body %}
 <div id="video-container">
 	<b>This would be the contents video..</b>
 	<video id="background-video" width='500px' height='400px' muted loop autoplay = 'true'>Your browser does not support the video.

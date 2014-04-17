@@ -5,102 +5,120 @@
 Texas Craft Beer
 </title>
 <head>
-	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js" ></script>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+	<link rel="stylesheet" type='text/css' href ="{{ STATIC_URL }}css/base.css">
 	<link rel="stylesheet" href="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/themes/smoothness/jquery-ui.css" />
 	<script src="//ajax.googleapis.com/ajax/libs/jqueryui/1.10.4/jquery-ui.min.js"></script>
-	<link rel="stylesheet" type='text/css' href ="{{ STATIC_URL }}css/base.css">
 {% block extrahead %}
 {% endblock %}
-	<script>
-$(document).load(function(){
-	$('.navbutton').live('mouseenter mouseleave', function(e){
-		if (e.type == "mouseenter"){
-			$(this).find('#submenu').show();
+<script>
+$(document).ready(function(){
+
+	$('.navbutton').on('mouseenter mouseleave', function(event){
+		if (event.type == 'mouseenter') {
+			$(this).find('#submenu').css('display', 'block').animate();
 		}
-		else {
-			$(this).find('#submenu').hide();
+		if (event.type == 'mouseleave') {
+			$(this).find('#submenu').css('display','none');
 		}
 	});
 });
-	</script>
+</script>
+
+<script>
+$(document).ready(function(){
+	var searchtags = $.get("127.0.0.1:8000/index/",{
+		{% block searchtags %}
+		s:'all',
+		{% endblock %}
+	},);
+});
+
+	$('#searchtext').autocomplete({
+		source: searchtags
+	});
+</script>
+<script>
+$(document).ready(function(){
+	$.ajax()
+});
+</script>
 <div class ="topbar">
-<div class = "logo-wrapper">
-	<div id="logo">
-	<a href="/#">
-	<img src="{{ STATIC_URL }}images/craftbrewlogo.jpg" /></a>
+	<div class = "logo-wrapper">
+		<div id="logo">
+			<a href="/#"><img src="{{ STATIC_URL }}images/craftbrewlogo.jpg" /></a>
+		</div>
+	</div>
+
+	<div id='nav-wrapper'>
+		<div class="menu">
+			<a href="/content/brewery/">
+			<div class="navbutton" id="Breweries">
+				Breweries
+				<ul id="submenu">
+					<span>Region</span>
+					<a href = '/content/brewery/Austin/'>
+					<li>Austin</li></a>
+	
+					<a href = "/content/brewery/SanAntonio">
+					<li>San Antonio</li></a>
+				</ul>
+			</div>
+			</a>
+		
+			<a href="/content/BrewPub/">
+			<div class="navbutton" id="BrewPubs">
+				BrewPubs
+				<ul id="submenu">
+					<span>Region</span>
+					<li><a href = '/content/brewery/Austin/'>
+					Austin</a></li>
+	
+					<li><a href = "/content/brewery/SanAntonio">
+					San Antonio</a></li>
+				</ul>
+			</div>
+			</a>
+		
+			<a href="/content/Bar/">
+			<div class="navbutton" id="Bars">
+				Bars
+			</div>
+			</a>
+
+			<a href="/content/Beer/">
+			<div class="navbutton" id="Beers">
+				Beers</a>
+				<ul id="submenu">
+					<span>Type</span>
+					<li>IPA</li>
+					<li>Hefe</li>
+				</ul>
+			</div>
+			</a>
+		</div>
+	</div>
+	<div class="search-wrapper">
+		<div class = "search">
+			<form action="/index/" id = 'search'>
+				<label for="search">Search: </label>
+				<input id="searchtext" type="text" name="q">
+				{% block search %}
+				<input type="hidden" value="all" name="s">
+				{% endblock %}
+				<input type="submit" value="Submit" />
+			</form>
+		</div>
 	</div>
 </div>
-
-<div id='nav-wrapper'>
-<div class="menu">
-	<a href="/content/brewery/">
-		<div class="navbutton" id="Breweries">
-			Breweries
-			<ul id="submenu">
-				<span>Region</span>
-				<a href = '/content/brewery/Austin/'>
-				<li>Austin</li></a>
-
-				<a href = "/content/brewery/SanAntonio">
-				<li>San Antonio</li></a>
-			</ul>
-		</div>
-	</a>
-
-	<a href="/content/BrewPub/">
-		<div class="navbutton" id="BrewPubs">
-			BrewPubs
-			<ul id="submenu">
-				<span>Region</span>
-				<li><a href = '/content/brewery/Austin/'>
-				Austin</a></li>
-
-				<li><a href = "/content/brewery/SanAntonio">
-				San Antonio</a></li>
-			</ul>
-		</div>
-	</a>
-
-	<a href="/content/Bar/">
-		<div class="navbutton" id="Bars">
-			Bars
-		</div>
-	</a>
-
-	<a href="/content/Beer/">
-		<div class="navbutton" id="Beers">
-			Beers</a>
-			<ul id="submenu">
-			<span>Type</span>
-			<li>IPA</li>
-			<li>Hefe</li>
-			</ul>
-		</div>
-	</a>
-</div>
-</div>
 </head>
-<div class="search-wrapper">
-<div class = "search">
-	<form action="/index/" id = 'search'>
-	Search:<input id="searchtext" type="text" name="q">
-	{% block search %}
-	{% endblock %}
-	<input type="submit" value="Submit" />
-	</form>
-</div>
-</div>
 
-</div>
 <body>
 {% block body %}
-
-{% if errors %}
-{{ errors }}<!-- oof, this doesnt look right!-->
-{% endif %}
-
+<iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/search?q=Draught%20House%20Pub%20&key=AIzaSyAeZ1diJFgphy_Y7dqQaSafdR6ewdAE5uM"></iframe>
 <!-- Home page announcements -->
 <!-- currently 4 spots of equal size-->
+<!-- this is dumb. find a new homepage design -->
 	<div class="anncouncement" id="spot0">
 		SPOT0
 		<a href="http://{{ content.0.url }}">
@@ -131,12 +149,15 @@ $(document).load(function(){
 
 {%  endblock %}
 </body>
-<div class="site-footer">
-	<div class="main-footer"
-</div>
-<div class="secondary-footer">
-	Site made by idiots </br>
-	arnol229@gmail.com
-</div>
-</div>
+
+<footer>
+	<div class="main-footer">
+		<h1>Tx Craft Beer</h1>
+	</div>
+	<div class="secondary-footer">
+		Site made by idiots </br>
+		arnol229@gmail.com
+	</div>
+</footer>
+
 </html>

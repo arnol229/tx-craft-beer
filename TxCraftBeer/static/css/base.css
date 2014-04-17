@@ -48,9 +48,6 @@
 		vertical-align: middle;
 		background-color: red;
 	}
-.navbutton:hover #submenu{
-	display:block;
-}
 #submenu{
 	font-size:35px;
 	border:2px black solid;
@@ -72,4 +69,18 @@
 	margin-right: 35%;
 	width:auto;
 	margin-left:35%;
+}
+.main-footer{
+	background-color: #E6E6E6;
+}
+.main-footer h1{
+	font-family: Comic Sans MS;
+	font: #754719;
+	text-align: center;
+	height:150px;
+	text-decoration: blink;
+}
+.secondary-footer{
+	background-color: #b2b2b2;
+	text-align: center;
 }

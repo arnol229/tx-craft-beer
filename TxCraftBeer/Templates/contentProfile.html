@@ -31,13 +31,16 @@ $(window).load(function() {
 
 {% if bars %}
 <div class="content" id="bars">
+	bars:
 	{% for bar in bars %}
-		{{ bar.name }}<br>
+		{{ bar.name }}
 	{% endfor %}
 </div>
 {% endif %}
-
+{% if video %}
 video:{{ video }}<br>
+{% endif %}
+{% if pics %}
 pics:
 <br>
 <div class="slider-wrapper theme-light">
@@ -48,11 +51,13 @@ pics:
 	    {% endfor %}
 	</div>
 </div>
+{% endif %}
 <br>
+{% if error %}
 error:{% for error in errors %}
 <br>
 {{ error }}
-
 {% endfor %}
+{% endif %}
 <br>
 {% endblock %}

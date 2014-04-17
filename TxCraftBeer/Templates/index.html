@@ -20,13 +20,13 @@ error: {{ error }}
 {% endif %}
 <br>
 <br>
+{{ results }}
 {% for cat, objs in results.items %}
 <ul>
 Category:{{ cat }}
 {% for obj in objs %}
 <li><a href = '/content/{{ cat }}/{{ obj.id }}'>{{ obj }}</a></li>
 <br>
-<img src={{ STATIC_URL }}{{ obj.pic }} height = '100' width = '100'>
 {% endfor %}
 <br>
 <br>
