@@ -13,6 +13,7 @@ $(window).load(function() {
 </script>
 {% endblock %}
 </head>
+
 {% block body %}
 <div class = "title-wrapper">
 	<div id="title">
@@ -20,6 +21,7 @@ $(window).load(function() {
 	</div>
 </div>
 
+<!-- if it is a bar/brewery/brewpub show what beers they have -->
 {% if beers %}
 <div class="content" id="beers">
 	beers:<br>
@@ -29,6 +31,7 @@ $(window).load(function() {
 </div>
 {% endif %}
 
+<!--If it is a beer, show what bars its served at -->
 {% if bars %}
 <div class="content" id="bars">
 	bars:
@@ -37,9 +40,15 @@ $(window).load(function() {
 	{% endfor %}
 </div>
 {% endif %}
+
+<!-- if theres a video, it should be set in the background -->
 {% if video %}
+<div class="background-vid">
 video:{{ video }}<br>
+</div>
 {% endif %}
+
+<!-- slideshow for pics -->
 {% if pics %}
 pics:
 <br>

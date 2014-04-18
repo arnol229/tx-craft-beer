@@ -27,79 +27,84 @@ $(document).ready(function(){
 
 <script>
 $(document).ready(function(){
-	var searchtags = $.get("127.0.0.1:8000/index/",{
-		{% block searchtags %}
-		s:'all',
-		{% endblock %}
-	},);
-});
+	//var searchtags = 
+	$.get("127.0.0.1:8000/index/",{
+		s:'all'
+	}).done(function(data){
+		alert("Data loaded: " + data);
+	});
 
-	$('#searchtext').autocomplete({
+	$('#searchtext').catcomplete({
+		delay:0,
 		source: searchtags
 	});
+});
 </script>
+
 <script>
 $(document).ready(function(){
 	$.ajax()
 });
 </script>
-<div class ="topbar">
-	<div class = "logo-wrapper">
-		<div id="logo">
-			<a href="/#"><img src="{{ STATIC_URL }}images/craftbrewlogo.jpg" /></a>
-		</div>
-	</div>
+<div class="head-wrapper">
+	<div class ="topbar">
 
-	<div id='nav-wrapper'>
-		<div class="menu">
-			<a href="/content/brewery/">
-			<div class="navbutton" id="Breweries">
-				Breweries
-				<ul id="submenu">
-					<span>Region</span>
-					<a href = '/content/brewery/Austin/'>
-					<li>Austin</li></a>
-	
-					<a href = "/content/brewery/SanAntonio">
-					<li>San Antonio</li></a>
-				</ul>
+		<div class = "logo-wrapper">
+			<div id="logo">
+				<a href="/#"><img src="{{ STATIC_URL }}images/craftbrewlogo.jpg" /></a>
 			</div>
-			</a>
-		
-			<a href="/content/BrewPub/">
-			<div class="navbutton" id="BrewPubs">
-				BrewPubs
-				<ul id="submenu">
-					<span>Region</span>
-					<li><a href = '/content/brewery/Austin/'>
-					Austin</a></li>
-	
-					<li><a href = "/content/brewery/SanAntonio">
-					San Antonio</a></li>
-				</ul>
-			</div>
-			</a>
-		
-			<a href="/content/Bar/">
-			<div class="navbutton" id="Bars">
-				Bars
-			</div>
-			</a>
-
-			<a href="/content/Beer/">
-			<div class="navbutton" id="Beers">
-				Beers</a>
-				<ul id="submenu">
-					<span>Type</span>
-					<li>IPA</li>
-					<li>Hefe</li>
-				</ul>
-			</div>
-			</a>
 		</div>
-	</div>
-	<div class="search-wrapper">
-		<div class = "search">
+	
+		<div id='nav-wrapper'>
+			<div class="menu">
+				<a href="/content/brewery/">
+				<div class="navbutton" id="Breweries">
+					Breweries
+					<ul id="submenu">
+						<span>Region</span>
+						<a href = '/content/brewery/Austin/'>
+						<li>Austin</li></a>
+		
+						<a href = "/content/brewery/SanAntonio">
+						<li>San Antonio</li></a>
+					</ul>
+				</div>
+				</a>
+			
+				<a href="/content/BrewPub/">
+				<div class="navbutton" id="BrewPubs">
+					BrewPubs
+					<ul id="submenu">
+						<span>Region</span>
+						<li><a href = '/content/brewery/Austin/'>
+						Austin</a></li>
+		
+						<li><a href = "/content/brewery/SanAntonio">
+						San Antonio</a></li>
+					</ul>
+				</div>
+				</a>
+			
+				<a href="/content/Bar/">
+				<div class="navbutton" id="Bars">
+					Bars
+				</div>
+				</a>
+	
+				<a href="/content/Beer/">
+				<div class="navbutton" id="Beers">
+					Beers</a>
+					<ul id="submenu">
+						<span>Type</span>
+						<li>IPA</li>
+						<li>Hefe</li>
+					</ul>
+				</div>
+				</a>
+			</div>
+		</div>
+
+		<div class="search-wrapper">
 			<form action="/index/" id = 'search'>
 				<label for="search">Search: </label>
 				<input id="searchtext" type="text" name="q">
@@ -109,45 +114,36 @@ $(document).ready(function(){
 				<input type="submit" value="Submit" />
 			</form>
 		</div>
+		
+		<div class="extra-nav">
+			<div class="extra-menu">
+				<a href="/contact/">
+				<div class = "extra-nav-button" id="contact">
+					Contact
+				</div></a>
+				<a href="/about/">
+				<div class = "extra-nav-button" id="about">
+					About
+				</div></a>
+				<a href="/admin/">
+				<div class = "extra-nav-button" id="key">
+					KEY
+				</div></a>
+			</div>
+		</div>
+	</div>
+
+	<div class ="sidebar">
+
 	</div>
 </div>
 </head>
 
 <body>
+	<div class="content-wrapper">
 {% block body %}
-<iframe width="600" height="450" frameborder="0" style="border:0" src="https://www.google.com/maps/embed/v1/search?q=Draught%20House%20Pub%20&key=AIzaSyAeZ1diJFgphy_Y7dqQaSafdR6ewdAE5uM"></iframe>
-<!-- Home page announcements -->
-<!-- currently 4 spots of equal size-->
-<!-- this is dumb. find a new homepage design -->
-	<div class="anncouncement" id="spot0">
-		SPOT0
-		<a href="http://{{ content.0.url }}">
-			<img src="{{ STATIC_URL }}{{ content.0.pic }}" height="100" />
-		</a>
-	</div>
-
-	<div class="anncouncement" id="spot1">
-		SPOT1
-		<a href="{{ content.1.url }}">
-			<img src="{{ STATIC_URL }}{{ content.1.pic.url }}" height="100" width = "100" />
-		</a>
-	</div>
-	
-	<div class="anncouncement" id="spot2">
-		SPOT2
-		<a href="{{ content.2.url }}">
-			<img src='{{ STATIC_URL }}{{ content.2.pic }}' height="100" width = "100" />
-		</a>
-	</div>
-
-	<div class="anncouncement" id="spot3">
-		SPOT3
-		<a href="{{ content.3.url }}">
-			<img src="{{ STATIC_URL }}{{ content.3.pic }}" height="100" width = "100"/>
-		</a>
-	</div>
-
 {%  endblock %}
+	</div>
 </body>
 
 <footer>

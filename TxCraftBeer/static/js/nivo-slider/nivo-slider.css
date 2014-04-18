@@ -13,13 +13,13 @@
     top:0px;
     left:0px;
     display:none;
-    width: 500px;
-    height: 500px !important;
+    width: auto;
+    height: auto !important;
 }
 .nivoSlider {
 	position:absolute;
-	height:500px;
-	width:500px;
+	height:auto;
+	width:auto;
 	overflow: hidden;
 }
 .nivoSlider img {
@@ -28,8 +28,8 @@
 	border-style:solid;
 	height:100%;
 	width:100%;
-	max-width: 500px;
-	max-height: 500px;
+	max-width: 100px;
+	max-height: 100px;
 }
 .nivo-main-image {
 	display: block !important;
