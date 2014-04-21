@@ -1,12 +1,13 @@
 from django.conf.urls import *
 from django.contrib import admin
-from views import home, index, contentProfile, contentHome,contact
+from views import home, index, contentProfile, contentHome,contact,landing
 from django.conf import settings
 
 admin.autodiscover()
 
 urlpatterns = patterns('',
-	(r'^$', home),
+	(r'^$', landing),
+	(r'^home/$', home),
 	(r'^admin/', include(admin.site.urls)),
 	#contact
 	(r'^contact/$', contact),

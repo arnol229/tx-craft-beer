@@ -112,10 +112,11 @@ class Image(models.Model):
 class Video(models.Model):
 	name = models.CharField(max_length=20)
 	video = models.FileField(upload_to='videos')
-	#subject=models.CharField(max_length=15,choices = CHOICES)
+	subject=models.CharField(max_length=15)
 	content_type=models.ForeignKey(ContentType, limit_choices_to={"app_label":"TxCraftBeer"})
 	object_id = models.PositiveIntegerField()
 	content_object=generic.GenericForeignKey('content_type', 'object_id')
-
+	#blurred image for loading?
+	#subject for filtering? ie landing page, content, descriptive, social
 	def __unicode__(self):
 		return self.name

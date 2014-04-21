@@ -38,6 +38,13 @@ def findAll(query):
 			'length':resultlength}
 
 ### Views ###
+def landing(request):
+	##should find a different way to find random images..
+	## ordering every image will be ineffecient when db grows
+	image = Image.objects.order_by('?')[0]
+	context = {"image":image,}
+	return render(request, 'landing.html', context)
+
 def home(request):
 	content=None
 	errors=None
