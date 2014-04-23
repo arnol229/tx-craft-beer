@@ -2,71 +2,25 @@
 <html>
 
 <head>
-	<link rel="stylesheet" type = "text/css" href = "{{ STATIC_URL }}css/animate.css">
+	<link rel="stylesheet" type = "text/css" href = "{{ STATIC_URL }}css/landing.css">
+	<link href='http://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'>
 	<style>
 	input[type="checkbox"]{
 		display: none;
 	}
-	input[type="checkbox"] + {
-
-	}
-	#selection{
-		height:100px;
-		width:200px;
-		display:inline-block;
-		border:black 2px solid;
-		background-color: red;
-	}
-	#selection:target{
-		background-color:green;
-	}
-	.main-title{
-	margin-left:0;
-	width:25%;
-	height:25%;
-	position: absolute;
-	border:1px red dotted;
-	background-color: green;
-	z-index: 2;
-	display: inline-block;
-	text-align: center;
-	left:50%;
-	}
-	.main-title img{
-		height:50%;
-		width:50%;
-	}
-	.background img{
-		height:100%;
-		width:100%;
-	}
-	.logo-wrapper{
-	border:2px black solid;
-	height:auto;
-	width:auto;
-	}
-	body, html{
-		height:90%;
-		width: 90%;
-	}
-	.search-bar{
-	position: absolute;
-	display:block;
-	border:2px black solid;
-	width:100%;
-	height:300px;
-	top:500px;
-	}
 	</style>
+	<title>Tx Craft Beer</title>
+
 </head>
 
 <body>
+
+<div class = "body-wrapper">
+	<div class = "topbar"></div>
+
 	<div class = "main-title">
-		<span>TX Craft Beer</span>
 		<div class = "logo-wrapper">
-			<div id = 'logo'>
-				<a href ='/home/'><img src = "{{ STATIC_URL }}images/craftbrewlogo.jpg" /></a>
-			</div>
+			<a href ='/home/'><img src = "{{ STATIC_URL }}images/craftbrewlogo.jpg" /></a>
 		</div>
 	</div>
 
@@ -76,45 +30,72 @@
 		<br>
 	</div>
 
-	<div class = "search-bar">
-		<div class = "search">
-			<form action="/index/" id = 'search'>
-				<label for="searchtext">Search: </label>
-				<input id="searchtext" type="text" name="q">
-			<div id="choices">
-				<input type="checkbox" name="s" id="brewery" value="brewery">
-				<label for ="brewery"><div id = "selection">Brewery</div></label>
-	
-				<input type="checkbox" name="s" id="bar" value="bar">
-				<label for ="bar">
-					<div class="ih-item circle effect1">
-        			<div class="spinner"></div>
-        			<div class="img"><img src="images/assets/2.jpg" alt="img"></div>
-        			<div class="info">
-        			  <div class="info-back">
-        			    <h3>Bars</h3>
-        			    
-        			  </div>
-        			</div></div></label>
-	
-				<input type="checkbox" name="s" id="brewpub" value="brewpub">
-				<label for ="brewpub"><div id = "selection">Brewpub</div></label>
-			</div>
-			<div id ="submit">
-				<input type="submit" value="Submit" />
-			</div>
-			</form>
+	<div class = "nav">
+		<form action="/index/" id = 'search'>
+		<div id = "textfield">
+			<input id="searchtext" type="text" name="q" placeholder="Search..." autofocus>
 		</div>
+
+		<div id="catagories">
+			<!-- BAR -->
+			<div id="BrewPub">
+				<input type="checkbox" name="s" id="bar" value="bar">
+				<label for ="BrewPub"><div id="check">Filter</div></label>
+				<a href="/content/BrewPub/"><div class="btn1 teal">
+    	    		<h1 class='top'>BrewPubs<i></i></h1>
+					<h2></h2>
+				</div></a>
+    		</div>
+
+			<!-- BrewPub -->
+			<div id="Bar">
+				<input type="checkbox" name="s" id="brewpub" value="brewpub">
+				<label for ="Bar"><div id="check">Filter</div></label>
+				<a href="/content/Bar/">
+    	    		<div class="btn1 orange">
+    	    		<h1 class='top'>Bars<i></i></h1>
+					<h2></h2>
+				</div></a>
+    		</div>
+	
+			<!-- Brewery -->
+			<div id="brewery">
+    	    	<input type="checkbox" name="s" id="brewery" value="brewery">
+				<label for ="brewery"><div id="check">Filter</div></label>
+				<a href="/content/Brewery/">
+    	    		<div class="btn1 blue">
+    	    		<h1 class='top'>Breweries<i></i></h1>
+					<h2></h2>
+				</div></a>
+    		</div>
+	
+			<!--Beer -->
+			<div id="beer">
+    	   		<input type="checkbox" name="s" id="beer" value="beer" />
+				<label for ="beer"><div id="check">Filter</div></label>
+				<a href="/content/Beer/"><div class="btn1 green">
+    	    		<h1 class='top'>Beers<i></i></h1>
+					<h2></h2>
+				</div></a>
+    		</div>
+	
+		</div>
+
+		<div id ="submit">
+			<input type="submit" value="Submit" />
+			<label for="submit"><img src="eyeglass.jpeg"></label>
+		</div>
+		</form>
 	</div>
-	<div class="ih-item circle effect1"><a href="#">
-        <div class="spinner"></div>
-        <div class="img"><img src="images/assets/2.jpg" alt="img"></div>
-        <div class="info">
-          <div class="info-back">
-            <h3>Heading here</h3>
-            <p>Description goes here</p>
-          </div>
-        </div></a></div>
+
+	<div class = "announce">
+		<div id = "announce-expand">
+			<img src = "arrowexpand.jpg">
+		</div>
+		<!-- \/ inject announcement div here \/ -->
+
+	</div>
+</div>
 </body>
 
 </html>

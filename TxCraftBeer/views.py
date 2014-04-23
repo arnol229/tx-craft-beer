@@ -41,8 +41,16 @@ def findAll(query):
 def landing(request):
 	##should find a different way to find random images..
 	## ordering every image will be ineffecient when db grows
-	image = Image.objects.order_by('?')[0]
-	context = {"image":image,}
+	barimg = Image.objects.filter(content_type__model="bar").order_by('?')[0]
+	breweryimg = Image.objects.filter(content_type__model="brewery").order_by('?')[0]
+	brewpubimg = Image.objects.filter(content_type__model="brewpub").order_by('?')[0]
+	beerimg = Image.objects.filter(content_type__model="beer").order_by('?')[0]
+	context = {
+	"barimg":barimg,
+	"breweryimg":breweryimg,
+	"brewpubimg":brewpubimg,
+	"beerimg":beerimg,}
+
 	return render(request, 'landing.html', context)
 
 def home(request):
