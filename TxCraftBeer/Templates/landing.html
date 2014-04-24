@@ -4,11 +4,17 @@
 <head>
 	<link rel="stylesheet" type = "text/css" href = "{{ STATIC_URL }}css/landing.css">
 	<link href='http://fonts.googleapis.com/css?family=Shadows+Into+Light' rel='stylesheet' type='text/css'>
+	<script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 	<style>
 	input[type="checkbox"]{
 		display: none;
 	}
 	</style>
+	<script>
+	$(document).ready(function(){
+		
+	});
+	</script>
 	<title>Tx Craft Beer</title>
 
 </head>
@@ -19,28 +25,31 @@
 	<div class = "topbar"></div>
 
 	<div class = "main-title">
-		<div class = "logo-wrapper">
-			<a href ='/home/'><img src = "{{ STATIC_URL }}images/craftbrewlogo.jpg" /></a>
+		<span>Texas Craft Beer</span>
+		<div class = "logo">
+			<a href ='/home/'>q</a>
 		</div>
 	</div>
 
 	<div class = "background">
-		<img src = '{{ STATIC_URL }}images/{{ image }}'/>
-		{{ STATIC_URL }}images/{{ image }}
-		<br>
+	</div>
+
+	<div class = "search">
+		<form action="/index/" id = 'search'>
+			<div id = "textfield">
+				<input id="searchtext" type="text" name="q" placeholder="Search..." autofocus autocomplete="off">
+			</div>
+			<div id ="submit">
+				<input id = "submit" type="submit" value="Submit" />
+				<label for="submit"></label>
+			</div>
+		</form>
 	</div>
 
 	<div class = "nav">
-		<form action="/index/" id = 'search'>
-		<div id = "textfield">
-			<input id="searchtext" type="text" name="q" placeholder="Search..." autofocus>
-		</div>
-
 		<div id="catagories">
 			<!-- BAR -->
 			<div id="BrewPub">
-				<input type="checkbox" name="s" id="bar" value="bar">
-				<label for ="BrewPub"><div id="check">Filter</div></label>
 				<a href="/content/BrewPub/"><div class="btn1 teal">
     	    		<h1 class='top'>BrewPubs<i></i></h1>
 					<h2></h2>
@@ -49,8 +58,6 @@
 
 			<!-- BrewPub -->
 			<div id="Bar">
-				<input type="checkbox" name="s" id="brewpub" value="brewpub">
-				<label for ="Bar"><div id="check">Filter</div></label>
 				<a href="/content/Bar/">
     	    		<div class="btn1 orange">
     	    		<h1 class='top'>Bars<i></i></h1>
@@ -60,8 +67,6 @@
 	
 			<!-- Brewery -->
 			<div id="brewery">
-    	    	<input type="checkbox" name="s" id="brewery" value="brewery">
-				<label for ="brewery"><div id="check">Filter</div></label>
 				<a href="/content/Brewery/">
     	    		<div class="btn1 blue">
     	    		<h1 class='top'>Breweries<i></i></h1>
@@ -71,8 +76,6 @@
 	
 			<!--Beer -->
 			<div id="beer">
-    	   		<input type="checkbox" name="s" id="beer" value="beer" />
-				<label for ="beer"><div id="check">Filter</div></label>
 				<a href="/content/Beer/"><div class="btn1 green">
     	    		<h1 class='top'>Beers<i></i></h1>
 					<h2></h2>
@@ -80,12 +83,6 @@
     		</div>
 	
 		</div>
-
-		<div id ="submit">
-			<input type="submit" value="Submit" />
-			<label for="submit"><img src="eyeglass.jpeg"></label>
-		</div>
-		</form>
 	</div>
 
 	<div class = "announce">

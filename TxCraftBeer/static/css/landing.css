@@ -4,36 +4,65 @@
   src:url("glyphs.ttf") format("truetype"), 
   url("glyph.woff") format("woff");
 }
+@font-face{
+  font-family: 'states';
+  src:url("state.woff") format("woff");
+}
 
 /* Div styles */
-input[type="checkbox"], input[type="submit"]{
+input[type="submit"]{
     display: none;
 }
-html, body{
+input[type="search"]{
+  text-shadow:0 0 2px black;
+  font-size: 20px;
+}
+body{
   height:100%;
   width:100%;
   left:0px;
+  right:0px;
   top:0px;
+  background-color: #186400;
 }
 .topbar{
-  border:solid 1px black;
-  height:50px;
+  z-index: 30;
+  height:8%;
   width:100%;
   left:0px;
   top:0px;
-  background-color: blue;
   position:absolute;
+  background-color: #0A2800;
 }
 .body-wrapper{
   height:100%;
-  background-color: yellow;
+  width:100%;
 }
 .main-title{
   border:black 2px solid;
   z-index: 20;
-  margin-left: auto ;
-  margin-right: auto ;
-  width:auto;
+  margin: -150px 0 0 35%;
+  top:15%;
+  position:absolute;
+}
+.main-title span{
+  font-family: 'lobster';
+  font-size:25px;
+  position:absolute;
+  color:green;
+  z-index: 12;
+  top:200px;
+  left:39%;
+}
+.main-title div{
+  z-index: 10;
+}
+.main-title a,.main-title a:hover,.main-title a:visited,.main-title a:active{
+  text-decoration: none;
+  color:black;
+  font-size: 350px;
+  font-family: 'states', Arial, sans-serif;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.8);
 }
 .background img{
   height:100%;
@@ -43,35 +72,65 @@ html, body{
   position: absolute;
 }
 .nav{
-  border:5px solid red;
   position:absolute;
   z-index: 20;
   display: inline-block;
   width:100%;
-  left:0px;
+  height:50%;
   text-align: center;
+  top:65%;
+  left:0px;
+  right:5px;
 }
 .announce{
   border:2px dotted blue;
+  top:1000px;
+  position: absolute;
 }
 #catagories{
   border:black 2px solid;
   top:500px;
-
+  width:75%;
+  border-radius:10px;
+  margin:auto;
+  vertical-align: middle;
+  background-color: #B72E41;
 }
 #catagories div{
   display:inline-block;
   text-align: center;
 }
-#catagories div label{
-}
-#check{
+#search {
+  text-align:center;
   border:2px black solid;
-  text-align: center;
-  top:100%;
+  background:#49000A;
+  top:50%;
+  position: absolute;
+  vertical-align: middle;
+  margin-left: 35%;
+  margin-right:35%;
+  width:30%;
+  border-radius: 50px;
 }
-#check:hover{
-  background-color: red;
+#searchtext{
+  border-radius:5px;
+  background:transparent;
+  border:3px solid black;
+}
+#searchtext:focus{
+  outline:0;
+}
+#search div{
+  display:inline;
+}
+#submit label{
+  font-family: 'glyphs', Arial,sans-serif;
+  font-size: 60px;
+  cursor: pointer;
+  border:1px dotted red;
+  vertical-align: middle;
+  text-shadow: 0 1px 0 rgba(255, 255, 255, 0.4), 0 1px 1px rgba(0, 0, 0, 0.8);
+  color: black;
 }
 
 /* --------------
@@ -245,27 +304,4 @@ Hover States
   -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3), inset 0px 2px 5px rgba(0, 0, 0, 0.3), 0 0 28px 6px rgba(47, 217, 29, 0.8);
   -moz-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3), inset 0px 2px 5px rgba(0, 0, 0, 0.3), 0 0 28px 6px rgba(47, 217, 29, 0.8);
   box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3), inset 0px 2px 5px rgba(0, 0, 0, 0.3), 0 0 28px 6px rgba(47, 217, 29, 0.8);
-}
-
-/* -------------------
-Media Queries
--------------------- */
-@media screen and (max-width: 860px) {
-  /* line 147, ../sass/screen.scss */
-  #wrapper {
-    width: 700px;
-  }
-}
-@media screen and (max-width: 740px) {
-  /* line 152, ../sass/screen.scss */
-  #wrapper {
-    width: 1000px;
-  }
-}
-@media screen and (max-width: 440px) {
-  /* line 157, ../sass/screen.scss */
-  #wrapper {
-    width: 370px;
-    text-align: center;
-  }
 }
