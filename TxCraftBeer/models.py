@@ -19,7 +19,7 @@ class Brewery(models.Model):
 		return self.name
 
 class BrewPub(models.Model):
-	name=models.CharField(max_length=20)
+	name = models.CharField(max_length=20)
 	onTap = models.CharField(max_length=100)
 	bio = models.CharField(max_length=500)
 	region = models.CharField(max_length=20)
